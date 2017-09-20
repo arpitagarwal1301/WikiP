@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity{
 
     private void setUpController() {
 
-        recyclerAdapter = new RecyclerAdapter(pageList);
+        recyclerAdapter = new RecyclerAdapter(this,pageList);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -81,6 +81,7 @@ public class HomeActivity extends AppCompatActivity{
                 // Handle error
                 Log.i("Error Response",error.toString());
                 Toast.makeText(HomeActivity.this,"Error Received",Toast.LENGTH_SHORT).show();
+                stopRefreshing();
             }
         });
         gsonRequest.makeReqeust(this,gsonRequest, JSON_WIKI_URL_TAG);
