@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -55,6 +56,9 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.clear_search_txt)
     TextView clearSearchText;
 
+    @BindView(R.id.webview)
+    WebView webViewWiki;
+
     private ParsedResponse mParsedResponse;
     private RecyclerAdapter recyclerAdapter;
     private List<Page> pageList = new ArrayList<>();
@@ -72,7 +76,19 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setUpController() {
 
-        recyclerAdapter = new RecyclerAdapter(this,pageList);
+        recyclerAdapter = new RecyclerAdapter(this, pageList, new RecyclerAdapter.OnItemClickedAction() {
+            @Override
+            public void onClick(View view) {
+                int position = (int) view.getTag();
+                if (position < 0 || position >= pageList.size()) return;
+
+                Page page = pageList.get(position);
+                if (view.getId()==R.id.item_layout){
+                    String str = page.getTitle().trim().replaceAll(" ","_");
+                    webViewWiki.loadUrl(ConstantsData.WIKIPEDIA_URL+str);
+                }
+            }
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
