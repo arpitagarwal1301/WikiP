@@ -7,4 +7,8 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="common_gray">#9C9D9D</color>
+    <color name="menu_header_blue">#CDBB79</color>
+    <color name="list_background">#B7695C</color>
+
 </resources>
