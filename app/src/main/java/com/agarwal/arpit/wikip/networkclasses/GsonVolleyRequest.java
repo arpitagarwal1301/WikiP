@@ -1,8 +1,10 @@
 package com.agarwal.arpit.wikip.networkclasses;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -57,9 +59,13 @@ public class GsonVolleyRequest<T> extends Request<T> {
             String json = new String(
                     response.data,
                     HttpHeaderParser.parseCharset(response.headers));
+
+            //By default this cache takes the expiry provided by the server response .
+            Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
+            Log.i("Response Cache",cacheEntry.toString());
+
             return Response.success(
-                    gson.fromJson(json, clazz),
-                    HttpHeaderParser.parseCacheHeaders(response));
+                    gson.fromJson(json, clazz), cacheEntry);
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
         } catch (JsonSyntaxException e) {

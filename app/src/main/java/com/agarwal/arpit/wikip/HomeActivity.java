@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setUpController();
         sendDataRequest();
-        setUpViews();
+        setUpSearchView();
     }
 
     private void setUpController() {
@@ -130,7 +130,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    private void setUpViews() {
+    private void setUpSearchView() {
 
         clearSearchText.setOnClickListener(new View.OnClickListener() {
             @Override
